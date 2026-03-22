@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Brainrots — Consigue tu Brainrot Gratis</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--common:#6abf69;--rare:#4fc3f7;--epic:#ce93d8;--legendary:#ffca28;--mythic:#ff8a65;--god:#ef5350;--secret:#f48fb1;--og:#ffffff;--bg:#0d0a1a;--bg2:#161229;--accent:#7c5cbf;--accent2:#a97de8;--text:#e8e0ff;--muted:#a09bc0;--border:rgba(255,255,255,0.08);--card:rgba(255,255,255,0.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(100,60,180,.18) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(60,30,130,.2) 0%,transparent 60%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:100;background:rgba(13,10,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#a97de8,#7c5cbf,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:var(--accent2)}
+.hero{position:relative;z-index:1;text-align:center;padding:5rem 2rem 3rem}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,rgba(169,125,232,.2),rgba(79,195,247,.15));border:1px solid rgba(169,125,232,.4);color:var(--accent2);font-size:.8rem;font-weight:700;padding:6px 16px;border-radius:100px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem;animation:pulse-badge 2s ease-in-out infinite}
+@keyframes pulse-badge{0%,100%{box-shadow:0 0 0 0 rgba(169,125,232,.4)}50%{box-shadow:0 0 0 8px rgba(169,125,232,0)}}
+.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.1;background:linear-gradient(135deg,#fff 0%,#d4b8ff 40%,#7c5cbf 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.hero h1 span{background:linear-gradient(135deg,#a97de8,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:550px;margin:0 auto 2rem;line-height:1.7}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7c5cbf,#a97de8);color:#fff;border:none;padding:14px 36px;border-radius:100px;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:700;cursor:pointer;text-decoration:none;box-shadow:0 4px 30px rgba(124,92,191,.5);transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(124,92,191,.7)}
+.floaters{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.floater{position:absolute;font-size:2.5rem;opacity:.15;animation:float-up var(--dur,8s) var(--delay,0s) ease-in-out infinite alternate}
+@keyframes float-up{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-30px) rotate(5deg)}}
+.ticker-wrap{position:relative;z-index:1;padding:1.5rem 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ticker-title{text-align:center;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+.scroll-track{display:flex;gap:12px;animation:scroll-left 45s linear infinite;width:max-content}
+.scroll-track:hover{animation-play-state:paused}
+@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.chip{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:5px 14px 5px 5px;white-space:nowrap;font-size:.82rem}
+.chip-img{width:30px;height:30px;border-radius:50%;object-fit:cover;background:rgba(255,255,255,.05)}
+.chip-name{font-weight:700}
+.chip-r{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:4px}
+.r-common{background:rgba(106,191,105,.15);color:var(--common);border:1px solid rgba(106,191,105,.3)}
+.r-rare{background:rgba(79,195,247,.15);color:var(--rare);border:1px solid rgba(79,195,247,.3)}
+.r-epic{background:rgba(206,147,216,.15);color:var(--epic);border:1px solid rgba(206,147,216,.3)}
+.r-legendary{background:rgba(255,202,40,.15);color:var(--legendary);border:1px solid rgba(255,202,40,.3)}
+.r-mythic{background:rgba(255,138,101,.15);color:var(--mythic);border:1px solid rgba(255,138,101,.3)}
+.r-god{background:rgba(239,83,80,.15);color:var(--god);border:1px solid rgba(239,83,80,.3)}
+.r-secret{background:rgba(244,143,177,.15);color:var(--secret);border:1px solid rgba(244,143,177,.3)}
+.r-og{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.claim-section{position:relative;z-index:1;padding:4rem 1rem;display:flex;justify-content:center}
+.claim-card{background:var(--bg2);border:1px solid rgba(169,125,232,.2);border-radius:24px;width:100%;max-width:580px;overflow:hidden;box-shadow:0 0 60px rgba(124,92,191,.15),0 20px 60px rgba(0,0,0,.4)}
+.claim-head{background:linear-gradient(135deg,rgba(124,92,191,.3),rgba(79,195,247,.1));padding:2rem;border-bottom:1px solid var(--border)}
+.steps{display:flex;align-items:center;margin-bottom:1.5rem}
+.step-d{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.step-c{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;transition:all .3s}
+.step-c.active{background:linear-gradient(135deg,#7c5cbf,#a97de8);color:#fff;box-shadow:0 0 20px rgba(169,125,232,.5)}
+.step-c.done{background:rgba(106,191,105,.2);color:var(--common);border:1px solid rgba(106,191,105,.4)}
+.step-c.off{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
+.step-lbl{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.step-line{flex:1;height:2px;background:var(--border);margin-bottom:18px;max-width:40px}
+.step-line.done{background:linear-gradient(90deg,#7c5cbf,#a97de8)}
+.c-title{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.c-sub{font-size:.88rem;color:var(--muted)}
+.claim-body{padding:2rem}
+.panel{display:none}.panel.active{display:block}
+.rarity-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.r-btn{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 12px;cursor:pointer;text-align:center;transition:all .2s}
+.r-btn:hover{border-color:var(--accent);transform:translateY(-2px)}
+.r-btn.sel{border-color:var(--accent2);background:rgba(169,125,232,.1)}
+.r-btn .rbi{font-size:1.6rem;margin-bottom:4px}
+.r-btn .rbr{font-size:.65rem;color:var(--muted);margin-top:2px}
+.r-btn .rbb{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:4px}
+.br-search{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);font-size:.9rem;width:100%;outline:none;margin-bottom:12px;font-family:'Nunito',sans-serif;transition:border .2s}
+.br-search:focus{border-color:var(--accent)}
+.br-search::placeholder{color:rgba(255,255,255,.2)}
+.br-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;max-height:360px;overflow-y:auto;padding-right:4px}
+.br-grid::-webkit-scrollbar{width:4px}
+.br-grid::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+.br-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px;cursor:pointer;text-align:center;transition:all .2s}
+.br-card:hover{border-color:var(--accent);transform:scale(1.03)}
+.br-card.sel{border-color:var(--accent2);background:rgba(169,125,232,.15)}
+.br-card img{width:64px;height:64px;object-fit:contain;margin-bottom:6px}
+.br-card .ph{width:64px;height:64px;margin:0 auto 6px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.br-card .bc-n{font-size:.72rem;font-weight:700;line-height:1.3}
+.br-card .bc-i{font-size:.62rem;color:var(--muted);margin-top:3px}
+.spin-wrap{display:flex;align-items:center;justify-content:center;padding:3rem;flex-direction:column;gap:12px;color:var(--muted);font-size:.88rem}
+.spin{width:32px;height:32px;border:3px solid rgba(169,125,232,.2);border-top-color:var(--accent2);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.fi{margin-bottom:1.5rem}
+.fl{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px;display:block}
+.fi input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:14px 16px;color:var(--text);font-size:1rem;width:100%;outline:none;font-family:'Nunito',sans-serif;transition:border .2s}
+.fi input:focus{border-color:var(--accent2)}
+.fi input::placeholder{color:rgba(255,255,255,.2)}
+.tasks{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.task{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.t-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.t-ttl{font-size:.88rem;font-weight:700;margin-bottom:2px}
+.t-sub{font-size:.75rem;color:var(--muted)}
+.t-sub a{transition:opacity .2s}
+.t-sub a:hover{opacity:.8}
+.t-chk{margin-left:auto;width:24px;height:24px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;background:transparent;color:var(--muted);flex-shrink:0;user-select:none;pointer-events:none}
+.t-chk.done{background:rgba(106,191,105,.2);border-color:rgba(106,191,105,.5);color:var(--common);font-size:1rem}
+.gen-box{text-align:center;padding:1rem 0}
+.gen-ico{font-size:4rem;margin-bottom:1rem;animation:sp 3s linear infinite;display:inline-block}
+.gen-bg{background:rgba(255,255,255,.06);border-radius:100px;height:8px;overflow:hidden;margin:1rem 0}
+.gen-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,#7c5cbf,#a97de8,#4fc3f7);width:0%;background-size:200% auto;animation:shim 1.5s linear infinite}
+@keyframes shim{from{background-position:200% center}to{background-position:-200% center}}
+.gen-st{font-size:.88rem;color:var(--muted)}
+.res-box{text-align:center;padding:1rem 0}
+.res-card{background:linear-gradient(135deg,rgba(124,92,191,.2),rgba(79,195,247,.1));border:1px solid rgba(169,125,232,.4);border-radius:20px;padding:2rem;margin-bottom:1.5rem;animation:appear .5s ease-out}
+@keyframes appear{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.res-card img{width:120px;height:120px;object-fit:contain;margin-bottom:.5rem;filter:drop-shadow(0 0 20px rgba(169,125,232,.4))}
+.res-card .rph{width:120px;height:120px;margin:0 auto .5rem;font-size:4rem;display:flex;align-items:center;justify-content:center}
+.res-name{font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.res-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1rem}
+.res-stat{background:rgba(0,0,0,.2);border-radius:10px;padding:8px}
+.res-sv{font-size:1rem;font-weight:700}
+.res-sl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.disc{font-size:.72rem;color:var(--muted);margin-top:1rem;line-height:1.5}
+.btn-row{display:flex;gap:10px}
+.btn-back{flex:0;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:14px;padding:14px 20px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--accent);color:var(--text)}
+.btn-next{flex:1;background:linear-gradient(135deg,#7c5cbf,#a97de8);border:none;color:#fff;border-radius:14px;padding:14px 20px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(124,92,191,.4);transition:all .2s}
+.btn-next:hover{transform:translateY(-1px)}
+.btn-next:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.showcase{position:relative;z-index:1;padding:4rem 2rem;max-width:1300px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:2.5rem}
+.sec-head h2{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;margin-bottom:8px}
+.sec-head p{color:var(--muted)}
+.rtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.rtab{padding:7px 18px;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'Nunito',sans-serif}
+.rtab:hover{border-color:var(--accent);color:var(--accent2)}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px 12px;text-align:center;transition:all .25s;cursor:pointer;position:relative;overflow:hidden}
+.sc-card:hover{transform:translateY(-4px);border-color:var(--accent);background:rgba(255,255,255,.07)}
+.sc-card img{width:80px;height:80px;object-fit:contain;margin-bottom:8px}
+.sc-card .sc-ph{width:80px;height:80px;margin:0 auto 8px;font-size:2.5rem;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border-radius:12px}
+.sc-name{font-size:.74rem;font-weight:700;line-height:1.3;margin-bottom:6px}
+.sc-badge{display:inline-block;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em}
+.sc-inc{font-size:.65rem;color:var(--muted);margin-top:4px}
+.sc-link{display:block;font-size:.62rem;color:var(--accent2);text-decoration:none;margin-top:6px;opacity:0;transition:opacity .2s}
+.sc-card:hover .sc-link{opacity:1}
+.sc-loading{display:flex;align-items:center;justify-content:center;padding:4rem;flex-direction:column;gap:12px;color:var(--muted);font-size:.9rem;grid-column:1/-1}
+.stats-s{position:relative;z-index:1;padding:3rem 2rem;background:linear-gradient(135deg,rgba(124,92,191,.08),rgba(13,10,26,0));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;max-width:800px;margin:0 auto;text-align:center}
+.si-n{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a97de8,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.si-l{font-size:.78rem;color:var(--muted);font-weight:600;margin-top:2px}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.8rem}
+.f-logo{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#a97de8,#7c5cbf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:8px}
+.confetti-c{position:fixed;top:0;left:0;width:100%;pointer-events:none;z-index:999}
+.cp{position:absolute;opacity:0;animation:cf 3s ease-in forwards}
+@keyframes cf{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.api-bar{position:fixed;bottom:16px;right:16px;background:rgba(22,18,41,.95);border:1px solid var(--border);border-radius:12px;padding:8px 16px;font-size:.72rem;color:var(--muted);z-index:50;backdrop-filter:blur(12px);display:flex;align-items:center;gap:8px;transition:opacity .5s}
+.api-dot{width:8px;height:8px;border-radius:50%;background:var(--common);flex-shrink:0}
+.api-dot.loading{background:var(--legendary);animation:pulse-badge 1s infinite}
+.api-dot.error{background:var(--god)}
+.reviews-s{position:relative;z-index:1;padding:4rem 2rem;max-width:1100px;margin:0 auto}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.rev-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.4rem;transition:transform .2s}
+.rev-card:hover{transform:translateY(-3px)}
+.rev-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rev-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.rev-user{font-weight:800;font-size:.88rem}
+.rev-date{font-size:.68rem;color:var(--muted);margin-top:1px}
+.rev-stars{color:#ffca28;font-size:.85rem;margin-bottom:8px;letter-spacing:2px}
+.rev-txt{font-size:.8rem;color:var(--muted);line-height:1.6}
+.rev-badge{display:inline-block;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:8px}
+@media(max-width:600px){.sc-grid{grid-template-columns:repeat(2,1fr)}.rarity-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}.hero{padding:3rem 1rem 2rem}}
+</style>
+</head>
+<body>
+<div class="confetti-c" id="confetti"></div>
+<div class="api-bar" id="apiBar"><div class="api-dot loading" id="apiDot"></div><span id="apiTxt">Conectando con el wiki...</span></div>
+
+<nav>
+  <a class="nav-logo" href="#">🧠 FreeBrainrots</a>
+  <ul class="nav-links">
+    <li><a href="#claim">Reclamar</a></li>
+    <li><a href="#brainrots">Brainrots</a></li>
+    <li><a href="#stats">Stats</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="floaters">
+    <span class="floater" style="left:5%;top:20%;--dur:7s;--delay:0s">🦈</span>
+    <span class="floater" style="left:12%;top:60%;--dur:9s;--delay:1s">🐘</span>
+    <span class="floater" style="right:8%;top:15%;--dur:8s;--delay:.5s">🦅</span>
+    <span class="floater" style="right:15%;top:65%;--dur:6s;--delay:2s">🐪</span>
+    <span class="floater" style="left:30%;top:80%;--dur:10s;--delay:.3s">🐊</span>
+    <span class="floater" style="right:35%;top:10%;--dur:7.5s;--delay:1.5s">🌸</span>
+    <span class="floater" style="left:55%;top:50%;--dur:8.5s;--delay:.8s">🍓</span>
+  </div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-badge">✨ Datos reales del Wiki Oficial</div>
+    <h1>Consigue tus<br><span>Brainrots</span><br>Favoritos</h1>
+    <p>+380 brainrots reales con imágenes del wiki oficial de Steal a Brainrot. Elige tu rareza y reclama el tuyo.</p>
+    <a href="#claim" class="btn-primary">⚡ Empezar a Generar</a>
+  </div>
+</section>
+
+<section class="ticker-wrap">
+  <div class="ticker-title">⚡ Recientemente Reclamados</div>
+  <div style="overflow:hidden"><div class="scroll-track" id="ticker"></div></div>
+</section>
+
+<section class="claim-section" id="claim">
+  <div class="claim-card">
+    <div class="claim-head">
+      <div class="steps" id="steps"></div>
+      <div class="c-title" id="cTitle">Introduce tu Usuario</div>
+      <div class="c-sub" id="cSub">Verificaremos tu cuenta de Roblox.</div>
+    </div>
+    <div class="claim-body">
+      <div class="panel active" id="p1">
+        <div class="fi"><label class="fl">Usuario de Roblox</label><input type="text" id="uInp" placeholder="Ej: CoolGamer123" oninput="chk1()" onkeydown="if(event.key==='Enter'&&!document.getElementById('b1').disabled)go(2)"></div>
+        <div class="btn-row"><button class="btn-next" id="b1" onclick="go(2)" disabled>Verificar & Continuar →</button></div>
+      </div>
+      <div class="panel" id="p2">
+        <div class="rarity-grid" id="rGrid"></div>
+        <div class="btn-row"><button class="btn-back" onclick="go(1)">← Atrás</button><button class="btn-next" id="b2" onclick="go(3)" disabled>Elegir Brainrot →</button></div>
+      </div>
+      <div class="panel" id="p3">
+        <input type="text" class="br-search" placeholder="🔍  Buscar brainrot..." id="bSearch" oninput="filterBr()">
+        <div class="br-grid" id="bGrid"><div class="spin-wrap"><div class="spin"></div>Cargando del wiki...</div></div>
+        <div class="btn-row" style="margin-top:1rem"><button class="btn-back" onclick="go(2)">← Atrás</button><button class="btn-next" id="b3" onclick="go(4)" disabled>Confirmar →</button></div>
+      </div>
+      <div class="panel" id="p4">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">Completa <b>todos</b> los requisitos para desbloquear tu brainrot:</p>
+        <div class="tasks">
+          <div class="task" id="task1">
+            <div class="t-ico" style="background:rgba(239,83,80,.15)">▶️</div>
+            <div style="flex:1">
+              <div class="t-ttl">Sígueme en YouTube</div>
+              <div class="t-sub" id="tsub1"><a href="https://www.youtube.com/@21rata130" target="_blank" style="color:var(--accent2);text-decoration:none" onclick="scheduleCheck(1)">@21rata130 — Haz clic aquí para seguir ↗</a></div>
+              <div id="tpend1" style="display:none;font-size:.7rem;color:var(--legendary);margin-top:4px">⏳ Verificando... <span id="tc1">1m 00s</span></div>
+            </div>
+            <div class="t-chk" id="t1">—</div>
+          </div>
+          <div class="task" id="task2">
+            <div class="t-ico" style="background:rgba(255,202,40,.15)">🔗</div>
+            <div style="flex:1">
+              <div class="t-ttl">Completar enlace de verificación</div>
+              <div class="t-sub" id="tsub2"><a id="lva" href="https://linkvertise.com/2055864/fupY9yQLRe4c?o=sharing" target="_blank" style="color:var(--accent2);text-decoration:none" onclick="startLV()">Haz clic aquí y completa el requisito ↗</a></div>
+              <div id="tpend2" style="display:none;font-size:.7rem;color:var(--legendary);margin-top:4px">⏳ Completa el enlace... vuelve aquí cuando acabes — <span id="tc2">2m 00s</span></div>
+              <button id="lvbtn" onclick="confirmLV()" style="display:none;margin-top:8px;background:linear-gradient(135deg,#7c5cbf,#a97de8);border:none;color:#fff;border-radius:10px;padding:8px 18px;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 2px 12px rgba(124,92,191,.4)">✅ Ya completé el enlace</button>
+              <div id="lvwait" style="display:none;font-size:.68rem;color:var(--muted);margin-top:6px">⏳ Espera <span id="lvwaitc">2m 00s</span> antes de confirmar...</div>
+            </div>
+            <div class="t-chk" id="t2">—</div>
+          </div>
+          <div class="task" id="task3">
+            <div class="t-ico" style="background:rgba(79,195,247,.15)">💬</div>
+            <div style="flex:1">
+              <div class="t-ttl">Unirse al Discord</div>
+              <div class="t-sub" id="tsub3"><a href="https://discord.gg/nhbC5YsZMt" target="_blank" style="color:var(--accent2);text-decoration:none" onclick="scheduleCheck(3)">Haz clic aquí para unirte al servidor ↗</a></div>
+              <div id="tpend3" style="display:none;font-size:.7rem;color:var(--legendary);margin-top:4px">⏳ Verificando... <span id="tc3">1m 00s</span></div>
+            </div>
+            <div class="t-chk" id="t3">—</div>
+          </div>
+          <div class="task" id="task4">
+            <div class="t-ico" style="background:rgba(106,191,105,.15)">🌐</div>
+            <div style="flex:1">
+              <div class="t-ttl">Visitar nuestra web</div>
+              <div class="t-sub" id="tsub4"><a href="https://futratlibre.netlify.app/" target="_blank" style="color:var(--accent2);text-decoration:none" onclick="scheduleCheck(4)">futratlibre.netlify.app — Haz clic aquí ↗</a></div>
+              <div id="tpend4" style="display:none;font-size:.7rem;color:var(--legendary);margin-top:4px">⏳ Verificando... <span id="tc4">1m 00s</span></div>
+            </div>
+            <div class="t-chk" id="t4">—</div>
+          </div>
+          <div class="task" id="task5">
+            <div class="t-ico" style="background:rgba(244,143,177,.15)">▶️</div>
+            <div style="flex:1">
+              <div class="t-ttl">Sígueme en YouTube (2)</div>
+              <div class="t-sub" id="tsub5"><a href="https://www.youtube.com/@JakooFN" target="_blank" style="color:var(--accent2);text-decoration:none" onclick="scheduleCheck(5)">@JakooFN — Haz clic aquí para seguir ↗</a></div>
+              <div id="tpend5" style="display:none;font-size:.7rem;color:var(--legendary);margin-top:4px">⏳ Verificando... <span id="tc5">1m 00s</span></div>
+            </div>
+            <div class="t-chk" id="t5">—</div>
+          </div>
+        </div>
+        <div class="btn-row"><button class="btn-back" onclick="go(3)">← Atrás</button><button class="btn-next" id="b4" onclick="startGen()" disabled>🚀 Generar Brainrot</button></div>
+      </div>
+      <div class="panel" id="p5">
+        <div class="gen-box">
+          <div class="gen-ico">⚙️</div>
+          <div style="font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:700;margin-bottom:6px">Generando...</div>
+          <div class="gen-bg"><div class="gen-bar" id="gBar"></div></div>
+          <div class="gen-st" id="gSt">Conectando con el servidor...</div>
+        </div>
+      </div>
+      <div class="panel" id="p6">
+        <div class="res-box">
+          <div class="res-card" id="resCard"></div>
+          <div class="disc">⚠️ Web fan-made, no afiliada a Roblox ni Steal a Brainrot.</div>
+          <div class="btn-row" style="margin-top:1.5rem"><button class="btn-next" onclick="reset()">🎲 Reclamar Otro</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase" id="brainrots">
+  <div class="sec-head"><h2>🗂️ Todos los Brainrots</h2><p>Imágenes e información en tiempo real del wiki oficial</p></div>
+  <div class="rtabs" id="rtabs"></div>
+  <div class="sc-grid" id="scGrid"><div class="sc-loading"><div class="spin"></div>Cargando desde el wiki...</div></div>
+</section>
+
+<section class="stats-s" id="stats">
+  <div class="stats-g">
+    <div><div class="si-n">382</div><div class="si-l">Brainrots Indexables</div></div>
+    <div><div class="si-n">51.4B</div><div class="si-l">Visitas en Roblox</div></div>
+    <div><div class="si-n">8</div><div class="si-l">Rarezas Distintas</div></div>
+    <div><div class="si-n">86.67%</div><div class="si-l">Ratio de Likes</div></div>
+  </div>
+</section>
+
+<section class="reviews-s">
+  <div class="sec-head"><h2>⭐ Lo que dicen los jugadores</h2><p>Miles de usuarios ya han reclamado sus brainrots favoritos</p></div>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(239,83,80,.2)">🦊</div>
+        <div><div class="rev-user">xXDarkFoxy99Xx</div><div class="rev-date">hace 2 horas</div></div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <div class="rev-txt">No me lo esperaba pero funcionó al 100%. Me salió Tung Tung Tung Sahur en mi primera vez. La web va súper fluida y los requisitos son fáciles de hacer.</div>
+      <span class="rev-badge r-secret">Secret</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(255,202,40,.2)">🌟</div>
+        <div><div class="rev-user">ProGamer_Mateo</div><div class="rev-date">hace 5 horas</div></div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <div class="rev-txt">Pensé que era fake como otras webs pero me salió Griffin legendario. Lo tengo en el juego y todo. Se lo he mandado a todos mis amigos del servidor de Discord.</div>
+      <span class="rev-badge r-god">Brainrot God</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(79,195,247,.2)">🐬</div>
+        <div><div class="rev-user">itzAlicia_rblx</div><div class="rev-date">hace 1 día</div></div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <div class="rev-txt">Llevo 3 brainrots ya reclamados con esta web. El sistema de tareas es justo y rápido. Me encanta que tenga las imágenes reales del wiki oficial. Muy buena página 🔥</div>
+      <span class="rev-badge r-epic">Épica</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(169,125,232,.2)">👾</div>
+        <div><div class="rev-user">SkibidiKing2025</div><div class="rev-date">hace 1 día</div></div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <div class="rev-txt">Conseguí Skibidi Toilet OG en mi segundo intento!! No me lo podía creer. El enlace tardó un poco pero mereció la pena totalmente. 10/10 os lo juro.</div>
+      <span class="rev-badge r-og">OG</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(106,191,105,.2)">🐸</div>
+        <div><div class="rev-user">carlosrblx_ez</div><div class="rev-date">hace 2 días</div></div>
+      </div>
+      <div class="rev-stars">★★★★☆</div>
+      <div class="rev-txt">Todo bien, tardé como 10 minutos en completar los requisitos pero al final me salió Smurf Cat. La web está muy bien diseñada y no tiene virus ni nada raro.</div>
+      <span class="rev-badge r-secret">Secret</span>
+    </div>
+    <div class="rev-card">
+      <div class="rev-top">
+        <div class="rev-av" style="background:rgba(255,138,101,.2)">🔥</div>
+        <div><div class="rev-user">NightWolf_Roblox</div><div class="rev-date">hace 3 días</div></div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <div class="rev-txt">Llevaba meses queriendo un Brainrot God y con esta página lo conseguí. Los canales de YouTube que piden seguir tienen buen contenido también. Recomendado 100%.</div>
+      <span class="rev-badge r-god">Brainrot God</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo">🧠 FreeBrainrots</span>
+  <p>Imágenes y datos del <a href="https://stealabrainrot.fandom.com" target="_blank" style="color:var(--accent2);text-decoration:none">Steal a Brainrot Wiki</a> (CC-BY-SA)</p>
+  <p style="margin-top:4px">Web fan-made • No afiliada a Roblox Corp. © 2026</p>
+</footer>
+
+<script>
+const WIKI='https://stealabrainrot.fandom.com';
+const API=WIKI+'/api.php';
+
+const RARITIES=[
+  {id:'common',    name:'Común',        color:'#6abf69',bg:'rgba(106,191,105,.15)',rate:'~55%',   icon:'🌿',cat:'Common_Brainrots'},
+  {id:'rare',      name:'Rara',         color:'#4fc3f7',bg:'rgba(79,195,247,.15)',  rate:'~20%',   icon:'💎',cat:'Rare_Brainrots'},
+  {id:'epic',      name:'Épica',        color:'#ce93d8',bg:'rgba(206,147,216,.15)', rate:'~10%',   icon:'⚡',cat:'Epic_Brainrots'},
+  {id:'legendary', name:'Legendaria',   color:'#ffca28',bg:'rgba(255,202,40,.15)',  rate:'~1%',    icon:'🌟',cat:'Legendary_Brainrots'},
+  {id:'mythic',    name:'Mítica',       color:'#ff8a65',bg:'rgba(255,138,101,.15)', rate:'~0.1%',  icon:'🔮',cat:'Mythic_Brainrots'},
+  {id:'god',       name:'Brainrot God', color:'#ef5350',bg:'rgba(239,83,80,.15)',   rate:'~0.01%', icon:'👑',cat:'Brainrot_God_Brainrots'},
+  {id:'secret',    name:'Secreta',      color:'#f48fb1',bg:'rgba(244,143,177,.15)', rate:'ultra',  icon:'🌸',cat:'Secret_Brainrots'},
+  {id:'og',        name:'OG',           color:'#ffffff',bg:'rgba(255,255,255,.08)', rate:'∞ raro', icon:'🍓',cat:'OG_Brainrots'},
+];
+
+const INCOME={
+  'Noobini Pizzanini':'$1/s','Lirilì Larilà':'$3/s','Tim Cheese':'$5/s','Frurifrura':'$6/s','Talpa Di Fero':'$8/s',
+  'Svivina Borbardino':'$9/s','Raccooni Jandelini':'$11/s','Pipi Kiwi':'$12/s','Tartaragno':'$13/s','Pipi Corni':'$14/s',
+  'Trippi Troppi':'$15/s','Banditto Bobritto':'$20/s','Boneca Ambalabu':'$30/s','Gangster Footera':'$50/s','Ta Ta Ta Ta Sahur':'$60/s',
+  'Frogo Elfo':'$75/s','Tralalero Tralala':'$80/s','Brr Brr Patapim':'$100/s','Cappuccino Assassino':'$140/s','Brrr Brrr Bananini':'$160/s',
+  'Bombardini Gusini':'$200/s','Puffaball':'$260/s','Karker Sahur':'$280/s','Gorillo Watermelondrillo':'$300/s',
+  'Tacorita Bicicleta':'$315/s','Los Primos':'$325/s','Los Tralaleritos':'$1K/s','Quaquaqualini':'$400/s',
+  'Frigo Camelo':'$1.9K/s','Carloo':'$6K/s','Tracoducotulu':'$5K/s','Alessio':'$7K/s','Fizzy Soda':'$10K/s',
+  'Mastodontico Telepiedone':'$12K/s','Cocofanto Elefanto':'$17.5K/s','Griffin':'$270K/s',
+  'Signore Carapace':'$285K/s','La Vacca Saturno Saturnita':'$315K/s','Dragon Gingerini':'$290K/s',
+  'Ginger Gerat':'$280K/s','Pop Pop Sahur':'$315K/s','Yin Yang Nuggetino':'$350K/s',
+  'Rainbow La Vacca':'$400K/s','Tung Tung Tung Sahur':'$1.5M/s','John Pork':'$80M/s',
+  'Smurf Cat':'$120M/s','Love Love Bear':'$200M/s','Headless Horseman':'$400M/s',
+  'Ketupat Bros':'$250M/s','La Casa Boo':'$300M/s','Fishino Clownino':'$350M/s',
+  'Skibidi Toilet':'$450M/s','Meowl':'$550M/s','Strawberry Elephant':'$750M/s',
+};
+
+let DB={};
+let selR=null,selB=null,tasks=new Set(),activeTab='common',imgC={};
+
+// ─── API ───
+async function apiGet(params){
+  const u=new URLSearchParams({...params,format:'json',origin:'*'});
+  try{const r=await fetch(`${API}?${u}`);return await r.json();}catch{return null;}
+}
+async function getCatMembers(cat){
+  let all=[],cont='';
+  do{
+    const d=await apiGet({action:'query',list:'categorymembers',cmtitle:'Category:'+cat,cmlimit:'500',cmnamespace:'0',...(cont?{cmcontinue:cont}:{})});
+    if(!d) break;
+    all=all.concat(d?.query?.categorymembers||[]);
+    cont=d?.continue?.cmcontinue||'';
+  }while(cont);
+  return all.map(m=>m.title);
+}
+async function getPageImg(title){
+  if(imgC[title]!==undefined) return imgC[title];
+  const d=await apiGet({action:'query',titles:title,prop:'pageimages',pithumbsize:'200'});
+  const p=Object.values(d?.query?.pages||{})[0];
+  const url=p?.thumbnail?.source||null;
+  imgC[title]=url; return url;
+}
+async function loadRarity(id){
+  if(DB[id]) return DB[id];
+  const r=RARITIES.find(x=>x.id===id);
+  let titles=await getCatMembers(r.cat);
+  if(!titles.length) titles=(FALLBACK[id]||[]).map(x=>x.title);
+  DB[id]=titles.map(t=>({title:t,img:(FALLBACK[id]||[]).find(x=>x.title===t)?.img||null,income:INCOME[t]||null,url:`${WIKI}/wiki/${encodeURIComponent(t.replace(/ /g,'_'))}`}));
+  if(id==='og'){
+    const lbImg='data:image/png;base64,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';
+    DB[id]=DB[id].filter(x=>x.title!=='Lucky Block OG');
+    DB[id].unshift({title:'Lucky Block OG',img:lbImg,income:'$750B',url:'https://stealabrainrot.fandom.com/wiki/Lucky_Block'});
+  }
+  return DB[id];
+}
+async function loadImgs(list){
+  const BATCH=8;
+  for(let i=0;i<list.length;i+=BATCH){
+    await Promise.all(list.slice(i,i+BATCH).map(async b=>{if(!b.img){b.img=await getPageImg(b.title)}}));
+  }
+}
+
+// ─── FALLBACK ───
+const FALLBACK={
+  common:[{title:'Noobini Pizzanini'},{title:'Lirilì Larilà'},{title:'Tim Cheese'},{title:'Frurifrura'},{title:'Talpa Di Fero'},{title:'Pipi Kiwi'},{title:'Tartaragno'},{title:'Pipi Corni'},{title:'Raccooni Jandelini'},{title:'Svivina Borbardino'}],
+  rare:[{title:'Trippi Troppi'},{title:'Banditto Bobritto'},{title:'Boneca Ambalabu'},{title:'Gangster Footera'},{title:'Frogo Elfo'},{title:'Ta Ta Ta Ta Sahur'}],
+  epic:[{title:'Tralalero Tralala'},{title:'Brr Brr Patapim'},{title:'Cappuccino Assassino'},{title:'Bombardini Gusini'},{title:'Puffaball'},{title:'Karker Sahur'},{title:'Gorillo Watermelondrillo'},{title:'Tacorita Bicicleta'},{title:'Los Primos'}],
+  legendary:[{title:'Los Tralaleritos'},{title:'Quaquaqualini'},{title:'Capi Taco'},{title:'Ballena Pizzanini'},{title:'Buho de Fuego'}],
+  mythic:[{title:'Frigo Camelo'},{title:'Carloo'},{title:'Tracoducotulu'},{title:'Alessio'},{title:'Fizzy Soda'},{title:'Mastodontico Telepiedone'}],
+  god:[{title:'Cocofanto Elefanto'},{title:'Griffin'},{title:'Signore Carapace'},{title:'La Vacca Saturno Saturnita'},{title:'Dragon Gingerini'},{title:'Ginger Gerat'},{title:'Pop Pop Sahur'}],
+  secret:[{title:'Yin Yang Nuggetino'},{title:'Rainbow La Vacca'},{title:'Tung Tung Tung Sahur'},{title:'John Pork'},{title:'Smurf Cat'},{title:'Love Love Bear'},{title:'Headless Horseman'},{title:'Ketupat Bros'},{title:'La Casa Boo'},{title:'Fishino Clownino'}],
+  og:[{title:'Lucky Block OG',img:'data:image/png;base64,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',income:'$750B'},{title:'Skibidi Toilet'},{title:'Meowl'},{title:'Strawberry Elephant'}],
+};
+
+// ─── STEPS ───
+const SM=[{l:'USUARIO'},{l:'RAREZA'},{l:'ELEGIR'},{l:'TAREAS'},{l:'GENERAR'}];
+const TT=[['Introduce tu Usuario','Verificaremos tu cuenta de Roblox.'],['Elige la Rareza','¿Qué nivel de poder quieres?'],['Elige tu Brainrot','Selecciona el brainrot a reclamar.'],['Completa los Requisitos','Dos pasos rápidos y será tuyo.'],['¡Generando!','Procesando tu solicitud...']];
+function renderSteps(a){
+  document.getElementById('steps').innerHTML=SM.map((s,i)=>{
+    const n=i+1,cls=n<a?'done':n===a?'active':'off',inn=n<a?'✓':n;
+    return `<div class="step-d"><div class="step-c ${cls}">${inn}</div><div class="step-lbl">${s.l}</div></div>${i<SM.length-1?`<div class="step-line ${n<a?'done':''}"></div>`:''}`;
+  }).join('');
+}
+async function go(n){
+  for(let i=1;i<=6;i++){const el=document.getElementById('p'+i);if(el)el.classList.toggle('active',i===n);}
+  renderSteps(n);
+  const idx=Math.min(n,5)-1;
+  document.getElementById('cTitle').textContent=TT[idx][0];
+  document.getElementById('cSub').textContent=TT[idx][1];
+  document.getElementById('claim').scrollIntoView({behavior:'smooth',block:'start'});
+  if(n===3&&selR) await fillBrainrots(selR);
+}
+function chk1(){document.getElementById('b1').disabled=document.getElementById('uInp').value.trim().length<3;}
+
+// Rarity grid
+function buildRGrid(){
+  document.getElementById('rGrid').innerHTML=RARITIES.map(r=>`
+    <div class="r-btn" id="rb_${r.id}" onclick="pickR('${r.id}')">
+      <div class="rbb r-${r.id}">${r.name}</div>
+      <div class="rbi">${r.icon}</div>
+      <div class="rbr">Spawn: ${r.rate}</div>
+    </div>`).join('');
+}
+function pickR(id){
+  selR=id;selB=null;
+  document.querySelectorAll('.r-btn').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('rb_'+id).classList.add('sel');
+  document.getElementById('b2').disabled=false;
+  document.getElementById('b3').disabled=true;
+}
+
+// Brainrot grid
+async function fillBrainrots(id){
+  const g=document.getElementById('bGrid');
+  g.innerHTML='<div class="spin-wrap"><div class="spin"></div>Cargando del wiki oficial...</div>';
+  const list=await loadRarity(id);
+  renderBGrid(list,id);
+  loadImgs(list).then(()=>renderBGrid(list,id));
+}
+function renderBGrid(list,id){
+  const g=document.getElementById('bGrid');
+  if(!list.length){g.innerHTML='<div style="color:var(--muted);text-align:center;padding:2rem;grid-column:1/-1">Sin resultados.</div>';return;}
+  g.innerHTML=list.map((b,i)=>`
+    <div class="br-card" id="bc${i}" onclick="pickB(${i},'${id}')">
+      ${b.img?`<img src="${b.img}" alt="${b.title}" onerror="this.outerHTML='<div class=ph>🧠</div>'">`:'<div class="ph">🧠</div>'}
+      <div class="bc-n">${b.title}</div>
+      ${b.income?`<div class="bc-i">${b.income}</div>`:''}
+    </div>`).join('');
+}
+function pickB(i,id){
+  const list=DB[id];if(!list)return;
+  selB=list[i];
+  document.querySelectorAll('.br-card').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('bc'+i).classList.add('sel');
+  document.getElementById('b3').disabled=false;
+}
+function filterBr(){
+  const q=document.getElementById('bSearch').value.toLowerCase();
+  document.querySelectorAll('.br-card').forEach(c=>{c.style.display=c.querySelector('.bc-n').textContent.toLowerCase().includes(q)?'':'none';});
+}
+
+// Tasks — auto-complete on link click, no manual override
+// Delays in seconds: YouTube=60s, Discord=60s, Web=60s, YT2=60s
+// Task 2 (Linkvertise) has special confirm-button flow
+const TASK_DELAYS={1:60, 3:60, 4:60, 5:60};
+const taskTimers={};
+let lvReady=false, lvTimer=null, lvWaitTimer=null;
+
+function fmtTime(s){const m=Math.floor(s/60),r=s%60;return m>0?`${m}m ${r<10?'0'+r:r}s`:`${r}s`;}
+
+function scheduleCheck(n){
+  if(tasks.has(n)||taskTimers[n]) return;
+  document.getElementById('tpend'+n).style.display='block';
+  document.getElementById('tsub'+n).style.opacity='0.4';
+  const chk=document.getElementById('t'+n);
+  chk.textContent='⏳';
+  let remaining=TASK_DELAYS[n];
+  document.getElementById('tc'+n).textContent=fmtTime(remaining);
+  taskTimers[n]=setInterval(()=>{
+    remaining--;
+    const el=document.getElementById('tc'+n);
+    if(el) el.textContent=fmtTime(remaining);
+    if(remaining<=0){
+      clearInterval(taskTimers[n]);
+      delete taskTimers[n];
+      completeTask(n);
+    }
+  },1000);
+}
+
+// Linkvertise special flow
+function startLV(){
+  if(tasks.has(2)||lvTimer) return;
+  lvReady=false;
+  document.getElementById('tpend2').style.display='block';
+  document.getElementById('tsub2').style.opacity='0.4';
+  document.getElementById('t2').textContent='⏳';
+  document.getElementById('lvwait').style.display='block';
+  document.getElementById('lvbtn').style.display='none';
+  let secs=120;
+  document.getElementById('lvwaitc').textContent=fmtTime(secs);
+  lvWaitTimer=setInterval(()=>{
+    secs--;
+    const el=document.getElementById('lvwaitc');
+    if(el) el.textContent=fmtTime(secs);
+    if(secs<=0){
+      clearInterval(lvWaitTimer);
+      lvWaitTimer=null;
+      lvReady=true;
+      document.getElementById('lvwait').style.display='none';
+      document.getElementById('lvbtn').style.display='inline-block';
+      // also update tpend text
+      document.getElementById('tpend2').innerHTML='✅ Tiempo completado — pulsa el botón para confirmar';
+      document.getElementById('tpend2').style.color='var(--common)';
+    }
+  },1000);
+}
+function confirmLV(){
+  if(!lvReady) return;
+  document.getElementById('lvbtn').style.display='none';
+  document.getElementById('tpend2').style.display='none';
+  completeTask(2);
+}
+function completeTask(n){
+  tasks.add(n);
+  const chk=document.getElementById('t'+n);
+  chk.textContent='✓';
+  chk.classList.add('done');
+  document.getElementById('tpend'+n).style.display='none';
+  const task=document.getElementById('task'+n);
+  task.style.borderColor='rgba(106,191,105,.4)';
+  task.style.background='rgba(106,191,105,.05)';
+  if(tasks.size>=5) document.getElementById('b4').disabled=false;
+}
+function chkT(n){} // disabled
+
+// Link rotation for task 2 — alternates on every reset
+const LV_LINKS=[
+  'https://linkvertise.com/2055864/fupY9yQLRe4c?o=sharing',
+  'https://direct-link.net/2055864/YifwctJthQNR'
+];
+let lvIndex=0;
+function rotateLV(){
+  lvIndex=(lvIndex+1)%LV_LINKS.length;
+  const a=document.getElementById('lva');
+  if(a) a.href=LV_LINKS[lvIndex];
+}
+
+// Generate
+const GMSGS=['Conectando con el servidor de Roblox...','Verificando usuario...','Comprobando rareza disponible...','Preparando tu brainrot...','¡Casi listo!'];
+function startGen(){
+  go(5);
+  const bar=document.getElementById('gBar'),st=document.getElementById('gSt');
+  let pct=0,mi=0;
+  const iv=setInterval(()=>{
+    pct+=Math.random()*12+3;if(pct>100)pct=100;
+    bar.style.width=pct+'%';
+    const nm=Math.min(Math.floor((pct/100)*GMSGS.length),GMSGS.length-1);
+    if(nm!==mi){mi=nm;st.textContent=GMSGS[mi];}
+    if(pct>=100){clearInterval(iv);setTimeout(showRes,600);}
+  },200);
+}
+function showRes(){
+  const b=selB,r=RARITIES.find(x=>x.id===selR),u=document.getElementById('uInp').value.trim();
+  document.getElementById('resCard').innerHTML=`
+    ${b.img?`<img src="${b.img}" alt="${b.title}" onerror="this.outerHTML='<div class=rph>🧠</div>'">`:'<div class="rph">🧠</div>'}
+    <div class="res-name">${b.title}</div>
+    <span class="rbb r-${r.id}" style="font-size:.7rem;padding:4px 14px;border-radius:100px;display:inline-block">${r.name}</span>
+    <div class="res-stats">
+      <div class="res-stat"><div class="res-sv">${b.income||'??/s'}</div><div class="res-sl">Ingresos</div></div>
+      <div class="res-stat"><div class="res-sv" style="color:#a97de8">${u}</div><div class="res-sl">Usuario</div></div>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:12px">✅ Reclamado exitosamente</p>
+    <a href="${b.url}" target="_blank" style="font-size:.72rem;color:var(--accent2);text-decoration:none;display:block;margin-top:8px">📖 Ver en el wiki oficial</a>`;
+  go(6);confetti();
+}
+function reset(){
+  selR=null;selB=null;tasks=new Set();
+  document.getElementById('uInp').value='';
+  chk1();
+  // clear LV state
+  lvReady=false;
+  if(lvWaitTimer){clearInterval(lvWaitTimer);lvWaitTimer=null;}
+  document.getElementById('lvbtn').style.display='none';
+  document.getElementById('lvwait').style.display='none';
+  document.getElementById('tpend2').style.color='var(--legendary)';
+  document.getElementById('tpend2').innerHTML='⏳ Completa el enlace... vuelve aquí cuando acabes — <span id="tc2">2m 00s</span>';
+  [1,2,3,4,5].forEach(n=>{
+    const chk=document.getElementById('t'+n);
+    chk.textContent='—';chk.classList.remove('done');
+    document.getElementById('tpend'+n).style.display='none';
+    document.getElementById('tsub'+n).style.opacity='1';
+    const task=document.getElementById('task'+n);
+    task.style.borderColor='';task.style.background='';
+    if(taskTimers[n]){clearInterval(taskTimers[n]);delete taskTimers[n];}
+  });
+  ['b1','b2','b3','b4'].forEach(id=>document.getElementById(id).disabled=true);
+  rotateLV();
+  go(1);
+}
+
+// Showcase
+function buildTabs(){
+  document.getElementById('rtabs').innerHTML=RARITIES.map(r=>`
+    <button class="rtab ${r.id==='common'?'active':''}" id="rt_${r.id}" onclick="setTab('${r.id}')"
+      style="${r.id==='common'?`background:${r.bg};color:${r.color};border-color:${r.color};`:''}">
+      ${r.icon} ${r.name}
+    </button>`).join('');
+}
+async function setTab(id){
+  activeTab=id;
+  const r=RARITIES.find(x=>x.id===id);
+  document.querySelectorAll('.rtab').forEach(t=>{t.classList.remove('active');t.style.cssText='';});
+  const tab=document.getElementById('rt_'+id);
+  tab.classList.add('active');tab.style.background=r.bg;tab.style.color=r.color;tab.style.borderColor=r.color;
+  document.getElementById('scGrid').innerHTML=`<div class="sc-loading"><div class="spin"></div>Cargando ${r.name.toLowerCase()}s...</div>`;
+  const list=await loadRarity(id);
+  if(activeTab===id) renderSC(list,id,r);
+  loadImgs(list).then(()=>{if(activeTab===id)renderSC(list,id,r);});
+}
+function renderSC(list,id,r){
+  const g=document.getElementById('scGrid');
+  if(!list.length){g.innerHTML=`<div class="sc-loading">Sin brainrots.</div>`;return;}
+  g.innerHTML=list.map(b=>`
+    <div class="sc-card" onclick="window.open('${b.url}','_blank')">
+      ${b.img?`<img src="${b.img}" alt="${b.title}" onerror="this.outerHTML='<div class=\\'sc-ph\\'>🧠</div>'">`:'<div class="sc-ph">🧠</div>'}
+      <div class="sc-name">${b.title}</div>
+      <span class="sc-badge r-${id}">${r.name}</span>
+      ${b.income?`<div class="sc-inc">${b.income}</div>`:''}
+      <a class="sc-link" href="${b.url}" target="_blank" onclick="event.stopPropagation()">📖 Wiki</a>
+    </div>`).join('');
+}
+
+// Ticker
+const TK=[
+  {n:'Tralalero Tralala',r:'epic'},{n:'Strawberry Elephant',r:'og'},{n:'Cocofanto Elefanto',r:'god'},
+  {n:'Headless Horseman',r:'secret'},{n:'Frigo Camelo',r:'mythic'},{n:'Meowl',r:'og'},
+  {n:'Smurf Cat',r:'secret'},{n:'La Vacca Saturno Saturnita',r:'god'},{n:'Los Tralaleritos',r:'legendary'},
+  {n:'Griffin',r:'god'},{n:'Tung Tung Tung Sahur',r:'secret'},{n:'Love Love Bear',r:'secret'},
+];
+const RL={common:'Común',rare:'Rara',epic:'Épica',legendary:'Legendaria',mythic:'Mítica',god:'Brainrot God',secret:'Secreta',og:'OG'};
+async function buildTicker(){
+  const ticker=document.getElementById('ticker');
+  const imgs={};
+  await Promise.all(TK.map(async t=>{imgs[t.n]=await getPageImg(t.n);}));
+  const dbl=[...TK,...TK];
+  ticker.innerHTML=dbl.map(t=>`
+    <div class="chip">
+      ${imgs[t.n]?`<img class="chip-img" src="${imgs[t.n]}" alt="${t.n}" onerror="this.outerHTML='<span style=\\'font-size:1.1rem;width:30px;text-align:center\\'>🧠</span>'">`:'<span style="font-size:1.1rem;width:30px;text-align:center">🧠</span>'}
+      <span class="chip-name">${t.n}</span>
+      <span class="chip-r r-${t.r}">${RL[t.r]}</span>
+    </div>`).join('');
+}
+
+// Confetti
+function confetti(){
+  const c=document.getElementById('confetti'),cols=['#a97de8','#4fc3f7','#ffca28','#6abf69','#ff8a65','#f48fb1','#ef5350'];
+  for(let i=0;i<60;i++){
+    const el=document.createElement('div');el.className='cp';
+    el.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};width:${Math.random()*8+5}px;height:${Math.random()*8+5}px;animation-delay:${Math.random()}s;animation-duration:${Math.random()*2+2}s`;
+    c.appendChild(el);setTimeout(()=>el.remove(),4000);
+  }
+}
+
+// Init
+async function init(){
+  renderSteps(1);buildRGrid();buildTabs();
+  try{
+    const t=await fetch(`${API}?action=query&list=categorymembers&cmtitle=Category:Common_Brainrots&cmlimit=3&format=json&origin=*`);
+    if(t.ok){
+      document.getElementById('apiDot').className='api-dot';
+      document.getElementById('apiTxt').textContent='Wiki conectado ✓';
+      setTimeout(()=>{document.getElementById('apiBar').style.opacity='0';setTimeout(()=>document.getElementById('apiBar').style.display='none',500);},2500);
+    } else throw 0;
+  } catch{
+    document.getElementById('apiDot').className='api-dot error';
+    document.getElementById('apiTxt').textContent='Wiki offline — datos locales';
+    Object.keys(FALLBACK).forEach(k=>{if(!DB[k])DB[k]=FALLBACK[k].map(x=>({...x,img:x.img||null,income:INCOME[x.title]||null,url:`${WIKI}/wiki/${encodeURIComponent(x.title.replace(/ /g,'_'))}`}));});
+  }
+  setTab('common');
+  buildTicker();
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
